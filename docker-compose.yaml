@@ -1,0 +1,21 @@
+version: "3.0"
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  promgateway:
+    image: prom/pushgateway
+    container_name: promgateway
+    restart: always
+    ports:
+      - "9091:9091"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro

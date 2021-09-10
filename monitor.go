@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"log"
 	"sync"
 	"time"
 
@@ -12,9 +13,9 @@ import (
 )
 
 var (
-	monitor      *Monitor
-	once         sync.Once
-	pushInterval time.Duration = 10 * time.Minute
+	monitor             *Monitor
+	once                sync.Once
+	DefaultPushInterval time.Duration = 15 * time.Second
 )
 
 type Monitor struct {
@@ -39,8 +40,7 @@ func SetPushWay(prometheusAddr, serverName string) Option {
 	return func(m *Monitor) {
 		m.engine = nil
 		m.pusher = push.New(prometheusAddr, serverName)
-		m.pusher.Gatherer(prometheus.DefaultGatherer)
-		m.lastWriteMetricsTime = time.AfterFunc(pushInterval, m.Push)
+		m.lastWriteMetricsTime = time.AfterFunc(DefaultPushInterval, m.Push)
 	}
 }
 
@@ -151,7 +151,9 @@ func (monitor *Monitor) Push() {
 		return
 	}
 
-	monitor.pusher.Push()
+	if err := monitor.pusher.Push(); err != nil {
+		log.Printf("push err %v", err)
+	}
 	monitor.Reset()
 }
 
@@ -160,7 +162,7 @@ func (monitor *Monitor) Reset() {
 		return
 	}
 
-	monitor.lastWriteMetricsTime.Reset(pushInterval)
+	monitor.lastWriteMetricsTime.Reset(DefaultPushInterval)
 }
 
 func (monitor *Monitor) registerMetric(m *Metric, subsystem string) {
@@ -175,9 +177,9 @@ func (monitor *Monitor) registerMetric(m *Metric, subsystem string) {
 	}
 }
 
-func (monitor *Monitor) CollectorCounterVec(name string) *prometheus.CounterVec {
+func (monitor *Monitor) CollectorCounterVec(id string) *prometheus.CounterVec {
 	for _, m := range monitor.MetricsList {
-		if m.Name == name {
+		if m.ID == id {
 			return m.MetricCollector.(*prometheus.CounterVec)
 		}
 	}
@@ -193,9 +195,9 @@ func (monitor *Monitor) CollectorCounterVec(name string) *prometheus.CounterVec 
 // 	return nil
 // }
 
-func (monitor *Monitor) CollectorHistogramVec(name string) *prometheus.HistogramVec {
+func (monitor *Monitor) CollectorHistogramVec(id string) *prometheus.HistogramVec {
 	for _, m := range monitor.MetricsList {
-		if m.Name == name {
+		if m.ID == id {
 			return m.MetricCollector.(*prometheus.HistogramVec)
 		}
 	}
@@ -211,9 +213,9 @@ func (monitor *Monitor) CollectorHistogramVec(name string) *prometheus.Histogram
 // 	return nil
 // }
 
-func (monitor *Monitor) CollectorGaugeVec(name string) *prometheus.GaugeVec {
+func (monitor *Monitor) CollectorGaugeVec(id string) *prometheus.GaugeVec {
 	for _, m := range monitor.MetricsList {
-		if m.Name == name {
+		if m.ID == id {
 			return m.MetricCollector.(*prometheus.GaugeVec)
 		}
 	}
@@ -229,9 +231,9 @@ func (monitor *Monitor) CollectorGaugeVec(name string) *prometheus.GaugeVec {
 // 	return nil
 // }
 
-func (monitor *Monitor) CollectorSummaryVec(name string) *prometheus.SummaryVec {
+func (monitor *Monitor) CollectorSummaryVec(id string) *prometheus.SummaryVec {
 	for _, m := range monitor.MetricsList {
-		if m.Name == name {
+		if m.ID == id {
 			return m.MetricCollector.(*prometheus.SummaryVec)
 		}
 	}
