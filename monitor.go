@@ -21,7 +21,7 @@ var (
 type Monitor struct {
 	engine               *gin.Engine
 	pusher               *push.Pusher
-	lastWriteMetricsTime *time.Timer // 写倒计时，超过10分钟，push一次，每次写重置倒计时，仅push模式使用
+	lastWriteMetricsTime *time.Timer // 写倒计时，超过15秒，push一次，每次写重置倒计时，仅push模式使用
 
 	MetricsList []*Metric
 }

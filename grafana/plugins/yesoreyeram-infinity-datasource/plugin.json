@@ -1,0 +1,101 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/v7.2.0/docs/sources/developers/plugins/plugin.schema.json",
+  "name": "Infinity",
+  "id": "yesoreyeram-infinity-datasource",
+  "type": "datasource",
+  "executable": "gpx_infinity",
+  "backend": true,
+  "metrics": true,
+  "annotations": true,
+  "alerting": false,
+  "info": {
+    "version": "0.8.0",
+    "updated": "2022-01-02",
+    "description": "JSON, CSV, XML, GraphQL, HTML and REST API datasource for Grafana. Do infinite things with Grafana. Transform data with UQL. Visualize data from anywhere",
+    "author": {
+      "name": "Sriramajeyam Sugumaran",
+      "url": "https://www.google.com/search?q=Sriramajeyam+Sugumaran"
+    },
+    "logos": {
+      "small": "img/icon.svg",
+      "large": "img/icon.svg"
+    },
+    "keywords": [
+      "grafana",
+      "json",
+      "csv",
+      "xml",
+      "html",
+      "graphql",
+      "uql",
+      "transformations",
+      "simple-json",
+      "url",
+      "inline",
+      "random walk",
+      "scraping",
+      "node graph",
+      "rest api",
+      "soap",
+      "atom",
+      "rss",
+      "feed",
+      "rss feed"
+    ],
+    "screenshots": [
+      {
+        "name": "features",
+        "path": "img/slide-features.png"
+      },
+      {
+        "name": "rest-api",
+        "path": "img/slide-rest-api.png"
+      },
+      {
+        "name": "variables",
+        "path": "img/slide-variables.png"
+      },
+      {
+        "name": "series",
+        "path": "img/slide-series.png"
+      }
+    ],
+    "links": [
+      {
+        "name": "Wiki",
+        "url": "https://yesoreyeram.github.io/grafana-infinity-datasource"
+      },
+      {
+        "name": "Demo",
+        "url": "https://grafana-infinity-datasource.herokuapp.com"
+      },
+      {
+        "name": "Try before installing",
+        "url": "https://grafana-infinity-datasource.herokuapp.com/explore"
+      },
+      {
+        "name": "Github",
+        "url": "https://github.com/yesoreyeram/grafana-infinity-datasource"
+      },
+      {
+        "name": "Need Help?",
+        "url": "https://github.com/yesoreyeram/grafana-infinity-datasource/discussions/categories/q-a"
+      },
+      {
+        "name": "Report Bug",
+        "url": "https://github.com/yesoreyeram/grafana-infinity-datasource/issues/new/choose"
+      },
+      {
+        "name": "Examples",
+        "url": "https://github.com/yesoreyeram/grafana-infinity-datasource/discussions/categories/show-and-tell"
+      }
+    ]
+  },
+  "dependencies": {
+    "grafanaDependency": ">=7.2.0",
+    "grafanaVersion": "7.2.0",
+    "plugins": []
+  },
+  "includes": [],
+  "routes": []
+}

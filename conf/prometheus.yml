@@ -33,3 +33,15 @@ scrape_configs:
      - targets: ['10.61.67.32:9091']
        labels:
          instance: promgateway
+  
+  - job_name: 'jcloud_bs'
+    static_configs:
+     - targets: ['10.61.67.32:8080']
+       labels:
+         instance: jcloud_bs
+  
+  - job_name: 'jcloud_bs_dev'
+    static_configs:
+     - targets: ['10.61.67.32:8090']
+       labels:
+         instance: jcloud_bs_dev
